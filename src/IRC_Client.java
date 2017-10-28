@@ -13,8 +13,7 @@ public class IRC_Client extends Application {
 		
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Terminal.fxml"));
-			root = fxmlLoader.load(); // Load first or it doesnt work!
-			Controller controller = fxmlLoader.getController();
+			root = fxmlLoader.load();
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
