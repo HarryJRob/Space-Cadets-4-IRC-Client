@@ -1,17 +1,11 @@
-/Client.class
 /Controller$1.class
 /Controller.class
 /Dark Theme.css
-/IRCClient$1.class
-/IRCClient$2.class
-/IRCClient$listener.class
-/IRCClient.class
-/Terminal.css
-/Terminal.fxml
-/chatTab.fxml
-/icon.png
 /IRCConnection$1.class
 /IRCConnection$2.class
 /IRCConnection$listener.class
 /IRCConnection.class
 /IRC_Client.class
+/Terminal.css
+/Terminal.fxml
+/chatTab.fxml

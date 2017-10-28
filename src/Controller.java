@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,22 +16,29 @@ public class Controller {
 	
 	public void initialize() { 
 		
+		/* Event handler for buttonMakeServer
+		 * Creates a new tab in the tab pane and sets the content equal to chatTab.fxml
+		 * The tab uses the port and IP provided to try and connect
+		 * Select the new tab and start it on it's own thread
+		 */
 		buttonMakeServer.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent e) {
-				Tab newTab = new Tab();
-				try {
-					newTab.setContent(FXMLLoader.load(getClass().getResource("chatTab.fxml")));
-					newTab.setText("Unnamed Server");
-					chatTabPane.getSelectionModel().select(newTab);
-				} catch (IOException e1) {
-					System.out.println(e.toString());
-				}
-				
-				if (textFieldServerIP.getText().length() != 0 && textFieldServerPort.getText().length() != 0) {
-					chatTabPane.getTabs().add(newTab);
-					new Thread(new IRCConnection(newTab, textFieldServerIP.getText(), Integer.parseInt(textFieldServerPort.getText()))).start();
+				if (!textFieldServerIP.getText().equals("") && !textFieldServerPort.getText().equals("")) {
+					
+					Tab newTab = new Tab();
+					try {
+						newTab.setContent(FXMLLoader.load(getClass().getResource("chatTab.fxml")));
+						newTab.setText("Unnamed Server");
+						chatTabPane.getSelectionModel().select(newTab);
+						chatTabPane.getTabs().add(newTab);
+						
+						new Thread(new IRCConnection(newTab, textFieldServerIP.getText(), Integer.parseInt(textFieldServerPort.getText()))).start();
+						
+					} catch (Exception e1) {
+						System.out.println(e1.toString());
+					}
 				}
 			}
 			

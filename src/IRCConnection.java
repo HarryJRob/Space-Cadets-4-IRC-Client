@@ -20,14 +20,14 @@ public class IRCConnection implements Runnable {
 	private TextArea outputToUser;
 	private Tab clientTab;
 	
-	private Thread inputListener;
-	
 	public IRCConnection(Tab clientTab, String serverAddress, int serverPort) {
+		//Get the components for this tab
 		try {
 			inputFromUser = (TextField) clientTab.getContent().lookup("#userEntry");
 			outputToUser = (TextArea) clientTab.getContent().lookup("#ouputToUser");
 			this.clientTab = clientTab;
 			
+			//Create a socket to use with the server
 			clientSocket = new Socket(serverAddress,serverPort);
 			
 		} catch (SocketException socketE) {
@@ -41,35 +41,39 @@ public class IRCConnection implements Runnable {
 		}
 	}
 	
+	//Runnable method
 	@Override
 	public void run() {
 		try {
 			outputToServer = new PrintWriter(clientSocket.getOutputStream(), true);
 			inputFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			
+			//Get the server name
 			{
 				String serverName = inputFromServer.readLine();
 				outputToUser.appendText("[Server] - Welcome to " + serverName);
-				try {
 				clientTab.setText(serverName);
-				} catch (Exception e) {
-					System.out.println(e.toString());
-				}
 			}
-			outputToUser.appendText("\n[Server] - Please Enter a nickname");
-
-			inputListener = new Thread(new listener());
-			inputListener.start();
 			
+			outputToUser.appendText("\n[Server] - Please Enter a nickname");
+			//The next message sent will be the users username
+			
+			//Start a new input listener to append the messages recieved to the TextArea
+			Thread inputThread = new Thread(new listener());
+			inputThread.start();
+			
+			//Set the event handler for closing a tab
 			clientTab.setOnCloseRequest(new EventHandler<Event>() {
 
 				@Override
 				public void handle(Event event) {
 					outputToServer.println("!quit");
+					//Close exisiting connections
 					try {
+						inputThread.interrupt();
 						outputToServer.close();
 						inputFromServer.close();
 						clientSocket.close();
-						inputListener.interrupt();
 						Thread.currentThread().interrupt();
 					} catch (Exception e) {
 						System.out.println(e.toString());
@@ -78,6 +82,7 @@ public class IRCConnection implements Runnable {
 				
 			});
 			
+			//Set the event handler for when the enter key is pressed
 			inputFromUser.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 				@Override
@@ -93,18 +98,19 @@ public class IRCConnection implements Runnable {
 		} catch (IOException e) {
 			outputToUser.appendText("Cannot find server");
 			System.out.println(e.toString());
-		}
+			
+		} catch (Exception e) { System.out.println(e.toString()); }
 	}
 	
 	private class listener implements Runnable {
-
+		
+		// If there is a line to read from the server then append it as a new line to the TextArea
 		@Override
-		public void run() {
+		public void run() { 
 			while(true) {
 				try {
 					outputToUser.appendText("\n" + inputFromServer.readLine());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					System.out.println(e.toString());
 					break;
 				} 

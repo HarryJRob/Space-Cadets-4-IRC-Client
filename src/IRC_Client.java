@@ -11,6 +11,7 @@ public class IRC_Client extends Application {
 	public void start(Stage primaryStage) {
 		Parent root = null;
 		
+		//Load FXML files and apply to stage
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Terminal.fxml"));
 			root = fxmlLoader.load();
@@ -19,6 +20,7 @@ public class IRC_Client extends Application {
 			System.out.println(e.toString());
 		}
 		
+		//Apply icon and set minimum window size
 		primaryStage.setMinWidth(600);
 		primaryStage.setMinHeight(400);
 		primaryStage.setWidth(600);
@@ -27,6 +29,7 @@ public class IRC_Client extends Application {
 		primaryStage.setTitle("IRC Client");
 		
 		Scene scene = new Scene(root);
+		//Apply CSS
 		scene.getStylesheets().add(getClass().getResource("Terminal.css").toExternalForm());
 		
 		primaryStage.setScene(scene);
