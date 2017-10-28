@@ -56,9 +56,9 @@ public class IRCConnection implements Runnable {
 			}
 			
 			outputToUser.appendText("\n[Server] - Please Enter a nickname");
-			//The next message sent will be the users username
+			//The next message sent will be the users nickname
 			
-			//Start a new input listener to append the messages recieved to the TextArea
+			//Start a new input listener to append the messages received to the TextArea
 			Thread inputThread = new Thread(new listener());
 			inputThread.start();
 			
@@ -102,6 +102,7 @@ public class IRCConnection implements Runnable {
 		} catch (Exception e) { System.out.println(e.toString()); }
 	}
 	
+	//A simple input listener which implements Runnable
 	private class listener implements Runnable {
 		
 		// If there is a line to read from the server then append it as a new line to the TextArea
