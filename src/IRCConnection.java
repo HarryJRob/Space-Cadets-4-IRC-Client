@@ -2,7 +2,6 @@ import java.net.*;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventTarget;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -11,8 +10,7 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.*;
 
-public class IRCClient implements Runnable {
-	
+public class IRCConnection implements Runnable {
 	private Socket clientSocket;
 	
 	private PrintWriter outputToServer;
@@ -24,7 +22,7 @@ public class IRCClient implements Runnable {
 	
 	private Thread inputListener;
 	
-	public IRCClient(Tab clientTab, String serverAddress, int serverPort) {
+	public IRCConnection(Tab clientTab, String serverAddress, int serverPort) {
 		try {
 			inputFromUser = (TextField) clientTab.getContent().lookup("#userEntry");
 			outputToUser = (TextArea) clientTab.getContent().lookup("#ouputToUser");
@@ -51,7 +49,11 @@ public class IRCClient implements Runnable {
 			{
 				String serverName = inputFromServer.readLine();
 				outputToUser.appendText("[Server] - Welcome to " + serverName);
+				try {
 				clientTab.setText(serverName);
+				} catch (Exception e) {
+					System.out.println(e.toString());
+				}
 			}
 			outputToUser.appendText("\n[Server] - Please Enter a nickname");
 
@@ -81,10 +83,8 @@ public class IRCClient implements Runnable {
 				@Override
 				public void handle(KeyEvent event) {
 					if(event.getCode().equals(KeyCode.ENTER)) {
-						if (!inputFromUser.getText().equals("!quit")) {
-							outputToServer.println(inputFromUser.getText());
-							inputFromUser.setText("");
-						}
+						outputToServer.println(inputFromUser.getText());
+						inputFromUser.setText("");
 					}
 				}
 					

@@ -33,7 +33,7 @@ public class Controller {
 				
 				if (textFieldServerIP.getText().length() != 0 && textFieldServerPort.getText().length() != 0) {
 					chatTabPane.getTabs().add(newTab);
-					new Thread(new IRCClient(newTab, textFieldServerIP.getText(), Integer.parseInt(textFieldServerPort.getText()))).start();
+					new Thread(new IRCConnection(newTab, textFieldServerIP.getText(), Integer.parseInt(textFieldServerPort.getText()))).start();
 				}
 			}
 			
