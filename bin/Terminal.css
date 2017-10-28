@@ -1,0 +1,84 @@
+.text-field:focused{
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.text-area:focused{
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.text-area {
+    -fx-background-insets: 0;
+    -fx-background-color: #2d2d2d;
+    -fx-background-radius: 0;
+    -fx-text-fill: white;
+}
+
+.text-area .content {
+  -fx-background-insets: 0;
+  -fx-background-color: #2d2d2d;
+  -fx-text-fill: white;
+  -fx-background-radius: 0;
+}
+
+.text-field {
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+    -fx-background-color: #2d2d2d;
+    -fx-background-radius: 0;
+}
+
+.text-field .content {
+  -fx-background-insets: 0;
+  -fx-background-color: #2d2d2d;
+  -fx-text-fill: white;
+  -fx-background-radius: 0;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane
+{
+    -fx-tab-min-width:90px;
+}
+
+.tab{
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+.tab-pane .tab
+{
+    -fx-background-color: #4c4c4c;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #2d2d2d;
+}
+
+.tab-pane {
+	-fx-background-color: #3d3d3d;
+}
+
+.tab .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+.button {
+	-fx-background-color: #2d2d2d;
+}
+
+.tab:selected .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+}
