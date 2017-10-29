@@ -51,12 +51,16 @@ public class IRCConnection implements Runnable {
 			//Get the server name
 			{
 				String serverName = inputFromServer.readLine();
-				outputToUser.appendText("[Server] - Welcome to " + serverName);
-				clientTab.setText(serverName);
+				String[] parts = serverName.split(" - ");
+				outputToUser.appendText(padStr(parts[0])+ parts[1]);
+				try {
+					clientTab.setText(serverName.substring(serverName.indexOf("to ") + 3));
+				} catch (Exception e) {
+					System.out.println(e.toString());
+				}
 			}
 			
-			outputToUser.appendText("\n[Server] - Please Enter a nickname");
-			//The next message sent will be the users nickname
+			//The next message sent will be the users nickname. this is validated on the servers end
 			
 			//Start a new input listener to append the messages received to the TextArea
 			Thread inputThread = new Thread(new listener());
@@ -68,7 +72,7 @@ public class IRCConnection implements Runnable {
 				@Override
 				public void handle(Event event) {
 					outputToServer.println("!quit");
-					//Close exisiting connections
+					//Close existing connections
 					try {
 						inputThread.interrupt();
 						outputToServer.close();
@@ -88,7 +92,8 @@ public class IRCConnection implements Runnable {
 				@Override
 				public void handle(KeyEvent event) {
 					if(event.getCode().equals(KeyCode.ENTER)) {
-						outputToServer.println(inputFromUser.getText());
+						if(!inputFromUser.getText().equals(""))
+							outputToServer.println(inputFromUser.getText());
 						inputFromUser.setText("");
 					}
 				}
@@ -102,6 +107,14 @@ public class IRCConnection implements Runnable {
 		} catch (Exception e) { System.out.println(e.toString()); }
 	}
 	
+	//Pads a str to a length if 16
+	private String padStr(String strToPad) {
+		while(strToPad.length() < 19) {
+			strToPad += ' ';
+		}
+		return strToPad;
+	}
+	
 	//A simple input listener which implements Runnable
 	private class listener implements Runnable {
 		
@@ -110,7 +123,8 @@ public class IRCConnection implements Runnable {
 		public void run() { 
 			while(true) {
 				try {
-					outputToUser.appendText("\n" + inputFromServer.readLine());
+					String[] parts = inputFromServer.readLine().split(" - ");
+					outputToUser.appendText("\n"+padStr(parts[0]) + parts[1] );
 				} catch (IOException e) {
 					System.out.println(e.toString());
 					break;

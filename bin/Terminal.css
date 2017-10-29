@@ -13,6 +13,7 @@
     -fx-background-color: #2d2d2d;
     -fx-background-radius: 0;
     -fx-text-fill: white;
+    -fx-font-family:"Consolas"; 
 }
 
 .text-area .content {
@@ -20,6 +21,7 @@
   -fx-background-color: #2d2d2d;
   -fx-text-fill: white;
   -fx-background-radius: 0;
+  -fx-font-family:"Consolas"; 
 }
 
 .text-field {
@@ -27,6 +29,7 @@
     -fx-text-fill: white;
     -fx-background-color: #2d2d2d;
     -fx-background-radius: 0;
+    -fx-font-family:"Consolas"; 
 }
 
 .text-field .content {
@@ -34,6 +37,7 @@
   -fx-background-color: #2d2d2d;
   -fx-text-fill: white;
   -fx-background-radius: 0;
+  -fx-font-family:"Consolas"; 
 }
 
 .tab-pane .tab-header-area .tab-header-background {

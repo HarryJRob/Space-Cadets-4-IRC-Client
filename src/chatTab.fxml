@@ -17,7 +17,7 @@
             </TextField>
          </bottom>
          <center>
-            <TextArea fx:id="ouputToUser" editable="false" prefHeight="200.0" prefWidth="200.0" stylesheets="@Terminal.css" BorderPane.alignment="CENTER" />
+            <TextArea fx:id="ouputToUser" editable="false" prefHeight="200.0" prefWidth="200.0" stylesheets="@Terminal.css" wrapText="true" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
    </children>
